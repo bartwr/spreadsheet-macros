@@ -86,14 +86,15 @@ Sub testB
 	transactionSheet = my_sheets(2)
 
 	'GET LEDGER CATEGORIES
-	for ledgerRow = 53 to 53
-'	for ledgerRow = 12 to 153
+'	for ledgerRow = 53 to 53
+	for ledgerRow = 12 to 152
+'	for ledgerRow = 131 to 131
       categoryCell = ledgerSheet.getCellByPosition(0,ledgerRow)
 	  'LOOP MONTHS
 	  for forMonth = 1 to 12
 	  	'FOR EVERY MONTH: GET SUM OF TRANSACTIONS FOR THIS CATEGORY
 	  	sumValue = 0
-		for transactionRow = 0 to 1000
+		for transactionRow = 0 to 3000
 		    transactionCategoryCell = transactionSheet.getCellByPosition(0,transactionRow)
 		    transactionDateCell = transactionSheet.getCellByPosition(5,transactionRow)
 		    transactionAmountCell = transactionSheet.getCellByPosition(7,transactionRow)
@@ -106,11 +107,11 @@ Sub testB
 			endif
 		next transactionRow
 		'FOR EVERY CATEGORY+MONTH COMBINATION: STORE SUM IN SPREADSHEET
-		if sumValue <> 0 or 1 = 1 then
+		if sumValue <> 0 then
 			cellToUpdate = ledgerSheet.getCellByPosition(9+forMonth,ledgerRow)
 			my_data(0,0) = sumValue
 			'Do not update header rows
-			if categoryCell.VALUE Mod 100 <> 0 then
+			if categoryCell.VALUE Mod 100 <> 0 or categoryCell.VALUE < 1000 then
 				cellToUpdate.setDataArray(my_data)
 			endif
 		endif
@@ -154,5 +155,3 @@ Sub updateSumForMonthAndCategory
 	msgbox str
 	
 End Sub
-
-
